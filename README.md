@@ -1,3 +1,7 @@
+## Description
+This is a tiny example of React's and Webpack code splitting capabilities using dynamic imports, `React.lazy` to render them as components, and `Suspense` to provide a fallback while they are loading.
+Code splitting is route based, providing the dynamically loaded components to each `Route` via render props.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
