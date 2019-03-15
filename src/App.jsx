@@ -1,25 +1,23 @@
-import React, {lazy, Suspense} from "react";
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import {Provider} from "react-redux";
-import {createStore, combineReducers} from "redux";
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Provider } from "react-redux";
 
-import aboutReducer from "./components/About/reducer";
-import topicsReducer from "./components/Topics/reducer";
+import configStore, { injectorCreator } from "./reduxUtils";
 
-const store = createStore(
-  combineReducers({
-    about: aboutReducer,
-    topics: topicsReducer
-  }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configStore({});
+const injector = injectorCreator(store);
+
+console.log(store);
 
 const About = lazy(() =>
-  import(/* webpackChunkName: "about" */ "./components/About/About"));
+  import(/* webpackChunkName: "about" */ "./components/About/About")
+);
 const Home = lazy(() =>
-  import(/* webpackChunkName: "home" */ "./components/Home/Home"));
+  import(/* webpackChunkName: "home" */ "./components/Home/Home")
+);
 const Topics = lazy(() =>
-  import(/* webpackChunkName: "topics" */ "./components/Topics/Topics"));
+  import(/* webpackChunkName: "topics" */ "./components/Topics/Topics")
+);
 
 const App = () => {
   return (
@@ -38,18 +36,20 @@ const App = () => {
             </li>
           </ul>
 
-          <hr/>
+          <hr />
 
-          <Suspense fallback={< div > Loading ...</div>}>
-            <Route exact path="/" render={() => <Home/>}/>
-            <Route path="/about" render={() => <About/>}/>
-            <Route path="/topics" render={props => <Topics {...props}/>}/>
+          <Suspense fallback={<div> Loading ...</div>}>
+            <Route exact path="/" render={() => <Home />} />
+            <Route path="/about" render={() => <About injector={injector} />} />
+            <Route
+              path="/topics"
+              render={props => <Topics injector={injector} {...props} />}
+            />
           </Suspense>
-
         </div>
       </Router>
     </Provider>
   );
-}
+};
 
 export default App;
