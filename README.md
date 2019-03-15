@@ -1,6 +1,9 @@
 ## Description
-This is a tiny example of React's and Webpack code splitting capabilities using dynamic imports, `React.lazy` to render them as components, and `Suspense` to provide a fallback while they are loading.
-Code splitting is route based, providing the dynamically loaded components to each `Route` via render props.
+This is a small example of React's and Webpack code splitting capabilities, featuring:
+- Use of dynamic imports, **`React.lazy`** to render them as components, and **`Suspense`** to provide a fallback while they are loading.
+- Route based code splitting by providing the dynamically loaded components to each `Route` via render props, using **React Router v4**.
+- Bundling of each component into a separate chunk with a meaningful name thanks to **Webpack**'s magic comments.
+- Dynamic injection of relevant **Redux** reducers for each component, only if such components are requested and rendered. This includes bundling of the reducers in the same chunks containing the components that need them.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -3,8 +3,8 @@ const initialState = {
 }
 
 const aboutHandlers = {
-  'TOPICS_ADD': state => ({ ...state, count: state.count + 1}),
-  'TOPICS_SUB': state => ({ ...state, count: state.count - 1}),
+  'TOPICS_ADD': state => ({ ...state, count: state.count + 2}),
+  'TOPICS_SUB': state => ({ ...state, count: state.count - 2}),
 };
 
 const aboutReducer = (state = initialState, action) => (

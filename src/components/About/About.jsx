@@ -1,32 +1,39 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from "react-redux";
 
+import reducer from "./reducer";
 import styles from "../../styles";
 
-const About = ({ dispatch, count }) => {
-  const decrement = () => dispatch({type: 'ABOUT_SUB'});
-  const increment = () => dispatch({type: 'ABOUT_ADD'});
+class About extends Component {
+  componentDidMount() {
+    this.props.injector('about', reducer);
+  }
 
-  return (
-    <div>
-      <h2>About</h2>
-      
-      <hr/>
-
-      <h2>Counter</h2>
-      <div style={styles}>
-        <h4>{count}</h4>
-        <div>
-          <button onClick={decrement}>-</button>
-          <button onClick={increment}>+</button>
+  render() {
+    const { count, decrement, increment } = this.props;
+    return (
+      <div>
+        <h2>About</h2>
+        <hr />
+        <h2>Counter</h2>
+        <div style={styles}>
+          <h4>{count}</h4>
+          <div>
+            <button onClick={decrement}>-</button>
+            <button onClick={increment}>+</button>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+};
 
-const mapStateToProps = ({ about }) => ({ count: about.count });
+const mapState = ({ about }) =>
+  about ? { count: about.count } : { count: 0 };
 
-// const mapDispatchToProps = {}
+const mapDispatch = dispatch => ({
+  decrement: () => dispatch({ type: "ABOUT_SUB" }),
+  increment: () => dispatch({ type: "ABOUT_ADD" }),
+});
 
-export default connect(mapStateToProps)(About);
+export default connect(mapState, mapDispatch)(About);
